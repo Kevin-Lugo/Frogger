@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
  */
 public class Player extends EntityBase {
     private Handler handler;
+    
 
     private Rectangle player;
     private String facing = "UP";
