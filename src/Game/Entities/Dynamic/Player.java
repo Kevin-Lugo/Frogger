@@ -1,6 +1,8 @@
 package Game.Entities.Dynamic;
 
 import Game.Entities.EntityBase;
+import Game.Entities.Static.Log;
+import Game.Entities.Static.Turtle;
 import Main.Handler;
 import Resources.Images;
 
@@ -14,12 +16,10 @@ import java.awt.image.BufferedImage;
 public class Player extends EntityBase {
     private Handler handler;
 
-
     private Rectangle player;
     private String facing = "UP";
     private Boolean moving = false;
     private int moveCoolDown=0;
-
     private int index =0;
 
     public Player(Handler handler) {
@@ -55,14 +55,18 @@ public class Player extends EntityBase {
     }
 
     private void move(){
-        if(moveCoolDown< 25){
+    	
+        
+    	if(moveCoolDown< 25){
             moveCoolDown++;
         }
         index=0;
 
         /////////////////MOVE UP///////////////
-        if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_W) && !moving && facing.equals("UP")){
-            moving=true;
+        if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_W) && !moving && facing.equals("UP")){  	
+           
+        	moving=true;
+        	
         }else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_W) && !moving && !facing.equals("UP")){
             if(facing.equals("DOWN")) {
                 if(this.getX() % 64 >= 64 / 2 ) {

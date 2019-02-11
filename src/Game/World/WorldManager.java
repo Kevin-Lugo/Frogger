@@ -70,7 +70,7 @@ public class WorldManager {
 
         gridWidth = handler.getWidth()/64;
         gridHeight = handler.getHeight()/64;
-        movementSpeed = 8;
+        movementSpeed = 1;
         // movementSpeed = 20; I dare you.
         
         /* 
@@ -94,8 +94,6 @@ public class WorldManager {
     }
 
 	public void tick() {
-		int playerCorX = player.getX();
-		int playerCorY = player.getY();
 		
 		if(this.handler.getKeyManager().keyJustPressed(this.handler.getKeyManager().num[2])) {
 			this.object2.word = this.object2.word + this.handler.getKeyManager().str[1];
@@ -152,7 +150,7 @@ public class WorldManager {
 		}
 		
 		HazardMovement();
-		HazardStatic( playerCorX, playerCorY );
+		HazardStatic();
 		
         player.tick();
         //make player move the same as the areas
@@ -161,26 +159,15 @@ public class WorldManager {
         object2.tick();
    
     }
-	private void HazardStatic(int playerCorX, int playerCorY ) {
+	private void HazardStatic() {
 
 		for (int i = 0; i < SpawnedHazards.size(); i++) {
 		
 			if (SpawnedHazards.get(i) instanceof Tree ) {
 			if (SpawnedHazards.get(i).GetCollision() != null && player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision())) {
-			player.setX(playerCorX);
-				//player.setY(player.getY() +6);
-			
-			
-			}
-			if (SpawnedHazards.get(i) instanceof Tree ) {
-				if (SpawnedHazards.get(i).GetCollision() != null && player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision())) {
-					player.setY(playerCorY);
-					
-					//player.setX(player.getX() +6);
-				}
-			}
+				player.setY(player.getY() +6);
 		 
-		
+			}
 		}
 		}
 		
@@ -282,8 +269,6 @@ public class WorldManager {
 		Random rand = new Random();
 		int randInt;
 		int choice = rand.nextInt(7);
-		int i = SpawnedHazards.indexOf(SpawnedHazards);
-		int j = SpawnedHazards.lastIndexOf(SpawnedHazards);
 		// Chooses between Log or Lillypad
 
 		if (area instanceof GrassArea) {
@@ -292,20 +277,15 @@ public class WorldManager {
 
 		} else if (area instanceof WaterArea) {
 
-			/*if (choice <= 2) {
-				*randInt = 64 * rand.nextInt(4);
-				*SpawnedHazards.add(new Log(handler, randInt, yPosition));
-				*/
+			if (choice <= 2) {
+				randInt = 64 * rand.nextInt(4);
+				SpawnedHazards.add(new Log(handler, randInt, yPosition));
+				
 			
 			} else if (choice >= 5) {
 				randInt = 64 * rand.nextInt(9);
-
-				if ( SpawnedHazards.get(j+1).getX() ==  SpawnedHazards.get(i+1).getX()) {
-					SpawnedHazards.add(new LillyPad(handler, randInt + 1, yPosition));
-				}
-				else {
 					SpawnedHazards.add(new LillyPad(handler, randInt, yPosition));
-			} 
+		 
 			
 			}else {
 				randInt = 64 * rand.nextInt(3);
