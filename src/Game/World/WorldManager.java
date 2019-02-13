@@ -70,7 +70,7 @@ public class WorldManager {
 
         gridWidth = handler.getWidth()/64;
         gridHeight = handler.getHeight()/64;
-        movementSpeed = 10;
+        movementSpeed = 1;
         // movementSpeed = 20; I dare you.
         
         /* 
