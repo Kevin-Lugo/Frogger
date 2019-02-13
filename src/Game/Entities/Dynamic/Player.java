@@ -27,7 +27,8 @@ public class Player extends EntityBase {
         this.handler = handler;
         this.handler.getEntityManager().getEntityList().add(this);
 
-        player = new Rectangle(); 	// see UpdatePlayerRectangle(Graphics g) for its usage.
+        player = new Rectangle();
+        // see UpdatePlayerRectangle(Graphics g) for its usage.
     }
 
     public void tick(){
@@ -53,12 +54,21 @@ public class Player extends EntityBase {
             setY(getY()-64);
         }
     }
-
-    private void move(){
+// this methods checks the player coordinates. It wont get the frog get out of bounds
+    private void PlayerBoundaries() {
+    	//System.out.println("X = " + player.getX() + "  Y = "+ player.getY());
+    	if ( this.getX() == (-64))
+        this.setX(0);
+    	if ( this.getX() == (640))
+            this.setX(576);
     	
-        
+    }
+    private void move(){
+    	PlayerBoundaries();
+    	
     	if(moveCoolDown< 25){
             moveCoolDown++;
+            
         }
         index=0;
 

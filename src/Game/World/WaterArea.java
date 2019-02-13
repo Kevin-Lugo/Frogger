@@ -2,6 +2,9 @@ package Game.World;
 
 import java.awt.Graphics;
 import java.util.Random;
+
+import com.sun.javafx.geom.Rectangle;
+
 import Main.Handler;
 import Resources.Animation;
 import Resources.Images;
@@ -29,4 +32,6 @@ public class WaterArea extends BaseArea {
             g.drawImage(anim.getCurrentFrame(), i*64, yPosition,64,66, null);
         }
     }
-}
+    
+    }
+

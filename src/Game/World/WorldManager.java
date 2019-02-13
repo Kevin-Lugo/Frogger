@@ -79,23 +79,19 @@ public class WorldManager {
          */ 
         	
         for(int i=0; i<gridHeight+2; i++) 
-        	 
+        	 // Doesn't draw the area where the frog will spawn
         	if (i != 10)
         		SpawnedAreas.add(randomArea((-2+i)*64));
         
         PlayerSpawn();
-       
-		
+        
+        System.out.println("X = " + player.getX() + "  Y = "+ player.getY());
+		if (player.getX() == 0) {
+			player.setX( player.getX() + 64);
+			System.out.println("Entered the else");
+		}
 			
-        
-       
-        	
-       // player.setX((gridWidth/2)*64);
-        //player.setY((gridHeight-3)*64);
-        //player.setY(64*10);
-        
-       // System.out.println( " Entered");
-
+	
 
         // Not used atm.
         grid = new ID[gridWidth][gridHeight];
@@ -172,6 +168,8 @@ public class WorldManager {
         object2.tick();
    
     }
+	
+	
 	private void HazardStatic() {
 
 		for (int i = 0; i < SpawnedHazards.size(); i++) {
@@ -192,6 +190,7 @@ public class WorldManager {
 		
 		
 	}
+	// Makes the player not Spawn in the Water Area and draws the area where the player will spawn
 	public void PlayerSpawn() {
 		
 		SpawnedAreas.add(NotRandomArea(8*64));
@@ -207,21 +206,13 @@ public class WorldManager {
 	 			player.setY((gridHeight-3)*64);
 		}
 		else {
-			//SpawnedAreas.remove(10);
-			//SpawnedAreas.add(randomArea(8*64));
-			System.out.println("Entered the else");
+			
+			
 			player.setX((gridWidth/2)*64);
  			player.setY((gridHeight-3)*64);
 		}
 	
-		}
-		
-		
-		// player.setX((gridWidth/2)*64);
-        //player.setX((gridWidth/2)*64);
-        //player.setY(64*10);
-        
-       // System.out.println( " Entered");
+	}
 		
 		
 		
