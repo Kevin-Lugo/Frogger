@@ -70,7 +70,7 @@ public class WorldManager {
 
         gridWidth = handler.getWidth()/64;
         gridHeight = handler.getHeight()/64;
-        movementSpeed = 1;
+        movementSpeed = 10;
         // movementSpeed = 20; I dare you.
         
         /* 
@@ -324,27 +324,33 @@ public class WorldManager {
 	private void SpawnHazard(int yPosition, BaseArea area) {
 		Random rand = new Random();
 		int randInt;
+		int randTimes;
 		int choice = rand.nextInt(7);
 		// Chooses between Log or Lillypad
 
 		if (area instanceof GrassArea) {
 			randInt = 64 * rand.nextInt(4);
 			SpawnedHazards.add(new Tree(handler, randInt, yPosition));
-			
 
 		} else if (area instanceof WaterArea) {
 
 			if (choice <= 2) {
 				randInt = 64 * rand.nextInt(4);
 				SpawnedHazards.add(new Log(handler, randInt, yPosition));
-				
-			
+
 			} else if (choice >= 5) {
-				randInt = 64 * rand.nextInt(9);
+
+				randTimes = rand.nextInt(9);
+
+				for (int i = 0; i <= randTimes; i++) {
+
+					System.out.println("Entered the loop");
+					randInt = 64 * rand.nextInt(9);
 					SpawnedHazards.add(new LillyPad(handler, randInt, yPosition));
-		 
-			
-			}else {
+
+				}
+
+			} else {
 				randInt = 64 * rand.nextInt(3);
 				SpawnedHazards.add(new Turtle(handler, randInt, yPosition));
 			}
