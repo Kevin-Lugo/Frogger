@@ -70,19 +70,32 @@ public class WorldManager {
 
         gridWidth = handler.getWidth()/64;
         gridHeight = handler.getHeight()/64;
-        movementSpeed = 1;
+        movementSpeed = 0;
         // movementSpeed = 20; I dare you.
         
         /* 
          * 	Spawn Areas in Map (2 extra areas spawned off screen)
          *  To understand this, go down to randomArea(int yPosition) 
-         */
-        for(int i=0; i<gridHeight+2; i++) {
-        	SpawnedAreas.add(randomArea((-2+i)*64));
-        }
+         */ 
         	
-        player.setX((gridWidth/2)*64);
-        player.setY((gridHeight-3)*64);
+        for(int i=0; i<gridHeight+2; i++) 
+        	 
+        	if (i != 10)
+        		SpawnedAreas.add(randomArea((-2+i)*64));
+        
+        PlayerSpawn();
+       
+		
+			
+        
+       
+        	
+       // player.setX((gridWidth/2)*64);
+        //player.setY((gridHeight-3)*64);
+        //player.setY(64*10);
+        
+       // System.out.println( " Entered");
+
 
         // Not used atm.
         grid = new ID[gridWidth][gridHeight];
@@ -165,7 +178,7 @@ public class WorldManager {
 		
 			if (SpawnedHazards.get(i) instanceof Tree ) {
 			if (SpawnedHazards.get(i).GetCollision() != null && player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision())) {
-				player.setY(player.getY() +6);
+				//handler.getGame().reStart();
 		 
 			}
 		}
@@ -179,6 +192,41 @@ public class WorldManager {
 		
 		
 	}
+	public void PlayerSpawn() {
+		
+		SpawnedAreas.add(NotRandomArea(8*64));
+		
+		if ( SpawnedAreas.get(10)  instanceof GrassArea ) {
+       	 player.setX((gridWidth/2)*64);
+			player.setY((gridHeight-3)*64);
+			
+       	 
+        }
+		else if (SpawnedAreas.get(10)  instanceof EmptyArea) {
+			 player.setX((gridWidth/2)*64);
+	 			player.setY((gridHeight-3)*64);
+		}
+		else {
+			//SpawnedAreas.remove(10);
+			//SpawnedAreas.add(randomArea(8*64));
+			System.out.println("Entered the else");
+			player.setX((gridWidth/2)*64);
+ 			player.setY((gridHeight-3)*64);
+		}
+	
+		}
+		
+		
+		// player.setX((gridWidth/2)*64);
+        //player.setX((gridWidth/2)*64);
+        //player.setY(64*10);
+        
+       // System.out.println( " Entered");
+		
+		
+		
+	
+	
 	
 	private void HazardMovement() {
 		
@@ -199,8 +247,7 @@ public class WorldManager {
 				if (SpawnedHazards.get(i).GetCollision() != null
 						&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision())) {
 					player.setX(player.getX() + 1);
-					
-					
+						
 				}
 				}
 		
@@ -242,6 +289,22 @@ public class WorldManager {
      * Given a yPosition, this method will return a random Area out of the Available ones.)
      * It is also in charge of spawning hazards at a specific condition.
      */
+    private BaseArea NotRandomArea(int yPosition) {
+    	Random rand = new Random();
+    	BaseArea randomArea = AreasAvailables.get(rand.nextInt(AreasAvailables.size())); 
+    	if(randomArea instanceof GrassArea) {
+    		randomArea = new GrassArea(handler, yPosition);
+    		SpawnHazard(yPosition, randomArea);
+    	}
+    	else {
+    		randomArea = new EmptyArea(handler, yPosition);
+    	}
+    	
+    	
+    	return randomArea;
+    	
+    }	
+    
 	private BaseArea randomArea(int yPosition) {
     	Random rand = new Random();
     	
@@ -255,7 +318,9 @@ public class WorldManager {
     	else if(randomArea instanceof WaterArea) {
     		randomArea = new WaterArea(handler, yPosition);
     		SpawnHazard(yPosition, randomArea);
+    	
     	}
+    			
     	else {
     		randomArea = new EmptyArea(handler, yPosition);
     	}
@@ -274,6 +339,7 @@ public class WorldManager {
 		if (area instanceof GrassArea) {
 			randInt = 64 * rand.nextInt(4);
 			SpawnedHazards.add(new Tree(handler, randInt, yPosition));
+			
 
 		} else if (area instanceof WaterArea) {
 
