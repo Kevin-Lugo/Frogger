@@ -159,8 +159,7 @@ public class WorldManager {
 		}
 		
 		HazardMovement();
-		HazardStatic();
-		
+		StaticTree();
         player.tick();
         //make player move the same as the areas
         player.setY(player.getY()+movementSpeed); 
@@ -168,15 +167,26 @@ public class WorldManager {
         object2.tick();
    
     }
-	
-	
-	private void HazardStatic() {
+	 
+	// This method wont let the frog jump over the tree
+	private void StaticTree() {
 
 		for (int i = 0; i < SpawnedHazards.size(); i++) {
 		
 			if (SpawnedHazards.get(i) instanceof Tree ) {
 			if (SpawnedHazards.get(i).GetCollision() != null && player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision())) {
-				//handler.getGame().reStart();
+				if ( Player.facing.equals("UP")) {
+					player.setY(player.getY() + 32);
+				}
+					else if ( Player.facing.equals("DOWN")) {
+						player.setY(player.getY() - 32);
+				}
+					else if ( Player.facing.equals("LEFT")) {
+						player.setX(player.getX() + 32);
+					}
+					else if ( Player.facing.equals("RIGHT")) {
+						player.setX(player.getX() - 32);
+					}
 		 
 			}
 		}
