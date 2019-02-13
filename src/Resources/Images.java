@@ -42,6 +42,7 @@ public class Images {
     public static BufferedImage waterArea;
     public static BufferedImage emptyArea;
     public static BufferedImage lilly;
+    public static BufferedImage Tree;
     public static BufferedImage log;
     public static BufferedImage grass;
 
@@ -134,6 +135,7 @@ public class Images {
             
             player = ImageIO.read(getClass().getResourceAsStream("/Sheets/froggy.png"));
             grass = ImageIO.read(getClass().getResourceAsStream("/Sheets/grass.jpg"));
+            Tree = ImageIO.read(getClass().getResourceAsStream("/Sheets/Tree.png"));
 
             grassArea = ImageIO.read(getClass().getResourceAsStream("/Sheets/grassArea.png"));
             waterArea = ImageIO.read(getClass().getResourceAsStream("/Sheets/waterArea.png"));

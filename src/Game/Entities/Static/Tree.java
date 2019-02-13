@@ -18,7 +18,7 @@ public class Tree extends StaticBase {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(Images.grassArea, this.getX(), this.getY(), 64, 64, null);
+		g.drawImage(Images.Tree, this.getX(), this.getY(), 64, 64, null);
 		Tree = new Rectangle(this.getX(), this.getY()+5, 64, 55);
 
 	}
