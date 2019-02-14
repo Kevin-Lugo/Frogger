@@ -341,7 +341,17 @@ public class WorldManager {
 			
 			} else if (choice >= 5) {
 				randInt = 64 * rand.nextInt(9);
+				SpawnedHazards.add(new LillyPad(handler, randInt, yPosition));
+				
+				int full = 9;
+				int least = 1;
+				int lillypad = (int) Math.round(Math.random()*((full-least)+1));
+				
+				for (int i= 0; i< lillypad ; i++) {		
+					randInt = 64 * rand.nextInt(9);
 					SpawnedHazards.add(new LillyPad(handler, randInt, yPosition));
+
+				}
 		 
 			
 			}else {
