@@ -29,7 +29,7 @@ public class WorldManager {
 
 	private ArrayList<BaseArea> SpawnedAreas;				// Areas currently on world
 	private ArrayList<StaticBase> SpawnedHazards;	// Hazards currently on world.
-	
+	public int LillyChoice=0;
     Long time;
     Boolean reset = true;
     
@@ -327,42 +327,102 @@ public class WorldManager {
     	}
     	return randomArea;
     }
+	
+	
+	
+	/* This method Allow multiple lillyPads in the same line and also doesn't allow to spawn to LillyPads in a row 
+	
+	 */
+	private void LillyPadSpawn(int yPosition, BaseArea area, int choice) {
+		int randTimes;
+		Random rand = new Random();
+		int randInt;
+		
+		//System.out.println("Before if " + LillyChoice);
+		
+		if (LillyChoice!=3) {
+		
+		randTimes = rand.nextInt(9);
 
+		for (int i = 0; i <= randTimes; i++) {
+
+			randInt = 64 * rand.nextInt(9);
+			
+			SpawnedHazards.add(new LillyPad(handler, randInt, yPosition));
+			LillyChoice = 3;
+			//System.out.println("After if" + LillyChoice);
+		}
+		}
+		else {
+			if (choice <= 2) {
+				randInt = 64 * rand.nextInt(4);
+				SpawnedHazards.add(new Log(handler, randInt, yPosition));
+				LillyChoice=2;
+				//System.out.println("After if" + LillyChoice);
+			}
+			else {
+				randInt = 64 * rand.nextInt(3);
+				SpawnedHazards.add(new Turtle(handler, randInt, yPosition));
+				LillyChoice=4;
+				//System.out.println("After if" + LillyChoice);
+			}
+			
+				
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
 	/*
 	 * Given a yPositionm this method will add a new hazard to the SpawnedHazards ArrayList
+	 * LillyChoice sets to 1 if the last hazard was a tree
+	 * LillyChoice sets to 2 if the last hazard was a Log
+	 * LillyChoice sets to 3 if the last hazard was a LilliyPad
+	 * LillyChoice sets to 4 if the last hazard was a turtle
+	 * 
+	 * 
 	 */
 	private void SpawnHazard(int yPosition, BaseArea area) {
 		Random rand = new Random();
 		int randInt;
 		int randTimes;
+		if ( LillyChoice == 3)
+			
+		System.out.println("LillyChoice = " + LillyChoice);
+		
 		int choice = rand.nextInt(7);
 		// Chooses between Log or Lillypad
 
 		if (area instanceof GrassArea) {
+			
 			randInt = 64 * rand.nextInt(4);
 			SpawnedHazards.add(new Tree(handler, randInt, yPosition));
-
+			LillyChoice=1;
+			
 		} else if (area instanceof WaterArea) {
 
 			if (choice <= 2) {
 				randInt = 64 * rand.nextInt(4);
 				SpawnedHazards.add(new Log(handler, randInt, yPosition));
-
+				LillyChoice=2;
 			} else if (choice >= 5) {
-
-				randTimes = rand.nextInt(9);
-
-				for (int i = 0; i <= randTimes; i++) {
-
-					System.out.println("Entered the loop");
-					randInt = 64 * rand.nextInt(9);
-					SpawnedHazards.add(new LillyPad(handler, randInt, yPosition));
-
-				}
-
-			} else {
+				
+				LillyPadSpawn (yPosition, area, choice);
+				
+			}else {
 				randInt = 64 * rand.nextInt(3);
 				SpawnedHazards.add(new Turtle(handler, randInt, yPosition));
+				LillyChoice=4;
 			}
 		}
 
