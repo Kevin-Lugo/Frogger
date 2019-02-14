@@ -350,17 +350,18 @@ public class WorldManager {
 
 			} else if (choice >= 5) {
 
+
 				randTimes = rand.nextInt(9);
 
 				for (int i = 0; i <= randTimes; i++) {
 
 					System.out.println("Entered the loop");
-					randInt = 64 * rand.nextInt(9);
-					SpawnedHazards.add(new LillyPad(handler, randInt, yPosition));
 
+				randInt = 64 * rand.nextInt(9);
+				SpawnedHazards.add(new LillyPad(handler, randInt, yPosition));
 				}
-
-			} else {
+				
+			}else {
 				randInt = 64 * rand.nextInt(3);
 				SpawnedHazards.add(new Turtle(handler, randInt, yPosition));
 			}
