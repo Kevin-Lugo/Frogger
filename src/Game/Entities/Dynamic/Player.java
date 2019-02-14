@@ -17,7 +17,7 @@ public class Player extends EntityBase {
     private Handler handler;
 
     private Rectangle player;
-    public static String facing = "UP";
+    private String facing = "UP";
     private Boolean moving = false;
     private int moveCoolDown=0;
     private int index =0;
@@ -56,8 +56,8 @@ public class Player extends EntityBase {
     }
 // this methods checks the player coordinates. It wont get the frog get out of bounds
     private void PlayerBoundaries() {
-    	//System.out.println("X = " + player.getX() + "  Y = "+ player.getY());
-    	if ( this.getX() <= (-64))
+    //System.out.println("X = " + player.getX() + "  Y = "+ player.getY());
+    	if ( this.getX() <= (0))
         this.setX(0);
     	if ( this.getX() >= (640))
             this.setX(576);
@@ -241,6 +241,11 @@ public class Player extends EntityBase {
 
     public Rectangle getPlayerCollision() {
         return player;
+    }
+    
+    public String Getfacing() {
+    	return facing;
+    	
     }
 
 }
