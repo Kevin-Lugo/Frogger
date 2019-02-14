@@ -344,8 +344,8 @@ public class WorldManager {
 				SpawnedHazards.add(new LillyPad(handler, randInt, yPosition));
 				
 				int full = 9;
-				int least = 1;
-				int lillypad = (int) Math.round(Math.random()*((full-least)+1));
+				int min = 1;
+				int lillypad = (int) Math.round(Math.random()*((full-min)+1));
 				
 				for (int i= 0; i< lillypad ; i++) {		
 					randInt = 64 * rand.nextInt(9);
