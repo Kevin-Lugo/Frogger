@@ -57,9 +57,9 @@ public class Player extends EntityBase {
 // this methods checks the player coordinates. It wont get the frog get out of bounds
     private void PlayerBoundaries() {
     	//System.out.println("X = " + player.getX() + "  Y = "+ player.getY());
-    	if ( this.getX() == (-64))
+    	if ( this.getX() <= (-64))
         this.setX(0);
-    	if ( this.getX() == (640))
+    	if ( this.getX() >= (640))
             this.setX(576);
     	
     }

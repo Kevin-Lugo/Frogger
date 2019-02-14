@@ -80,11 +80,13 @@ public class GameSetUp implements Runnable {
         pauseState = new PauseState(handler);
 
         State.setState(menuState);
-
+        //musicHandler.set_changeMusic("res/music/Perro chillando.mp3");
+        //musicHandler.set_changeMusic("res/music/04 Caro.mp3");
         musicHandler.set_changeMusic("res/music/UTheme.mp3");
         musicHandler.play();
         musicHandler.setLoop(true);
         musicHandler.setVolume(0.25);
+        
     }
 
     public void reStart(){
