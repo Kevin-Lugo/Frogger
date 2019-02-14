@@ -406,17 +406,6 @@ public class WorldManager {
 				LillyChoice=2;
 			} else if (choice >= 5) {
 
-				randTimes = rand.nextInt(9);
-
-				for (int i = 0; i <= randTimes; i++) {
-
-					System.out.println("Entered the loop");
-
-				randInt = 64 * rand.nextInt(9);
-				SpawnedHazards.add(new LillyPad(handler, randInt, yPosition));
-				
-				}
-
 				LillyPadSpawn (yPosition, area, choice);
 
 				
