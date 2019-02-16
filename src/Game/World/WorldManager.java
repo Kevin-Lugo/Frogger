@@ -212,7 +212,10 @@ public class WorldManager {
 			// Moves Log or Turtle to the right
 			if (SpawnedHazards.get(i) instanceof Log || SpawnedHazards.get(i) instanceof Turtle) {
 				SpawnedHazards.get(i).setX(SpawnedHazards.get(i).getX() + 1);
-
+				if (SpawnedHazards.get(i).getX() == 640) {
+				SpawnedHazards.get(i).setX(-64*2);
+				}
+			
 				// Verifies the hazards Rectangles aren't null and
 				// If the player Rectangle intersects with the Log or Turtle Rectangle, then
 				// move player to the right.
@@ -228,8 +231,9 @@ public class WorldManager {
 				SpawnedHazards.remove(i);
 			}
 		}
+		}
 
-	}
+	
 
 	public void render(Graphics g) {
 
@@ -327,6 +331,46 @@ public class WorldManager {
 
 	}
 
+	private void LogSpawn(int yPosition, BaseArea area, int choice) {
+
+		Random rand = new Random();
+		int randInt;
+		int low = 1;
+		int high = 5;
+		int result = rand.nextInt(high - low) + low;
+		int randTimesLog = result;
+		;
+
+		if (LillyChoice != 2) {
+			System.out.println(" equals = " + randTimesLog);
+			randInt = rand.nextInt(9);
+			for (int i = 1; i <= randTimesLog; i++) {
+
+				// randInt = 64 * rand.nextInt(9) ;
+				if (randTimesLog == 1) {
+					System.out.println(" 1 Logs");
+					randInt = 0;
+				} else if (randTimesLog == 2) {
+					System.out.println(" 2 Logs");
+					randInt = randInt - 5 * 64;
+				} else if (randTimesLog == 3) {
+					System.out.println(" 2 Logs");
+					randInt = randInt - 4 * 64;
+				} else if (randTimesLog == 4) {
+					System.out.println(" 4 Logs");
+					randInt = randInt - 3 * 64;
+				}
+
+				SpawnedHazards.add(new Log(handler, randInt, yPosition));
+
+				LillyChoice = 2;
+				// System.out.println("After if" + LillyChoice);
+				System.out.println(i);
+			}
+
+		}
+	}
+
 	/*
 	 * Given a yPositionm this method will add a new hazard to the SpawnedHazards
 	 * ArrayList LillyChoice sets to 1 if the last hazard was a tree LillyChoice
@@ -353,9 +397,8 @@ public class WorldManager {
 		} else if (area instanceof WaterArea) {
 
 			if (choice <= 2) {
-				randInt = 64 * rand.nextInt(4);
-				SpawnedHazards.add(new Log(handler, randInt, yPosition));
-				LillyChoice = 2;
+				LogSpawn(yPosition, area, choice);
+				
 			} else if (choice >= 5) {
 
 				LillyPadSpawn(yPosition, area, choice);
@@ -365,6 +408,7 @@ public class WorldManager {
 				SpawnedHazards.add(new Turtle(handler, randInt, yPosition));
 				LillyChoice = 4;
 			}
+			
 		}
 
 	}
