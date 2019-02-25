@@ -228,17 +228,26 @@ public class WorldManager {
 			if (SpawnedHazards.get(i) instanceof Turtle) {
 				SpawnedHazards.get(i).setX(SpawnedHazards.get(i).getX() - 1);
 				if (SpawnedHazards.get(i).getX() == 0) {
-				SpawnedHazards.get(i).setX(608);
+				SpawnedHazards.get(i).setX(768);
 				}
 			
 				// Verifies the hazards Rectangles aren't null and
 				// If the player Rectangle intersects with the Log or Turtle Rectangle, then
 				// move player to the right.
 				if (SpawnedHazards.get(i).GetCollision() != null
-						&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision())) {
+						&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision()) 
+						&& SpawnedHazards.get(i) instanceof Log) {
 					player.setX(player.getX() + 1);
 
 				}
+				if (SpawnedHazards.get(i).GetCollision() != null
+						&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision()) 
+						&& SpawnedHazards.get(i) instanceof Turtle) {
+					player.setX(player.getX() - 1);
+
+				}
+				
+				
 			}
 			
 			
@@ -349,6 +358,47 @@ public class WorldManager {
 		}
 
 	}
+	private void TurtleSpawn(int yPosition, BaseArea area, int choice) {
+		Random rand = new Random();
+		int randInt;
+		int low = 1;
+		int high = 5;
+		int result = rand.nextInt(high - low) + low;
+		int randTimesTur = result;
+		;
+
+		if (LillyChoice != 4) {
+			//System.out.println(" equals = " + randTimesTur);
+			randInt = rand.nextInt(9);
+			for (int i = 1; i <= randTimesTur; i++) {
+
+				// randInt = 64 * rand.nextInt(9) ;
+				if (randTimesTur == 1) {
+					System.out.println(" 1 Logs");
+					randInt = 0;
+				} else if (randTimesTur == 2) {
+					System.out.println(" 2 Logs");
+					randInt = randInt + 5 * 64;
+				} else if (randTimesTur == 3) {
+					System.out.println(" 2 Logs");
+					randInt = randInt + 4 * 64;
+				} else if (randTimesTur == 4) {
+					System.out.println(" 4 Logs");
+					randInt = randInt + 3 * 64;
+				}
+
+				SpawnedHazards.add(new Turtle(handler, randInt, yPosition));
+
+				LillyChoice = 4;
+				// System.out.println("After if" + LillyChoice);
+				System.out.println(i);
+			}
+
+		}
+		
+		
+		
+	}
 
 	private void LogSpawn(int yPosition, BaseArea area, int choice) {
 
@@ -421,9 +471,8 @@ public class WorldManager {
 				LillyPadSpawn(yPosition, area, choice);
 
 			} else {
-				randInt = 64 * rand.nextInt(3);
-				SpawnedHazards.add(new Turtle(handler, randInt, yPosition));
-				LillyChoice = 4;
+				TurtleSpawn(yPosition, area, choice);
+				
 			}
 			
 		}
