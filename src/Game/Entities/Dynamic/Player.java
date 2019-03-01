@@ -79,7 +79,7 @@ public class Player extends EntityBase {
 		}
 		index = 0;
 
-		///////////////// MOVE UP///////////////
+		///////////////// MOVE UP////////////////
 		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_W) && !moving && facing.equals("UP")) {
 			this.score++;
 			if (this.score >= this.highscore)

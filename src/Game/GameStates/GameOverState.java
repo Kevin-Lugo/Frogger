@@ -35,7 +35,7 @@ public class GameOverState extends State {
 
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
+		
 		 handler.getMouseManager().setUimanager(uiManager);
 	        uiManager.tick();
 	        count++;
@@ -50,7 +50,7 @@ public class GameOverState extends State {
 
 	@Override
 	public void render(Graphics g) {
-		// TODO Auto-generated method stub
+		
 		 g.drawImage(Images.GameOver,0,0,handler.getGame().getWidth(),handler.getGame().getHeight(),null);
 	        uiManager.Render(g);
 	        
