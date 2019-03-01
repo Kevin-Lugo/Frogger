@@ -3,15 +3,18 @@ package Game.World;
 import java.awt.Graphics;
 import java.util.Random;
 
-import com.sun.javafx.geom.Rectangle;
-
+import java.awt.Rectangle;
 import Main.Handler;
 import Resources.Animation;
 import Resources.Images;
+import jdk.internal.org.objectweb.asm.Handle;
+
 
 public class WaterArea extends BaseArea {
 
     private Animation anim;
+    private Rectangle water;
+    
 
     WaterArea(Handler handler, int yPosition) {
         super(handler, yPosition);
@@ -23,7 +26,6 @@ public class WaterArea extends BaseArea {
     @Override
     public void tick() {
         anim.tick();	// Animation frame movement.
-
     }
 
     @Override
@@ -32,6 +34,17 @@ public class WaterArea extends BaseArea {
             g.drawImage(anim.getCurrentFrame(), i*64, yPosition,64,66, null);
         }
     }
+    public Rectangle GetCollision() {
+    	return water;
+    }
+    public double getMaxY() {
+    	
+    	return this.water.getMaxY();
+    }
+    public double getMinY() {
+    	return this.water.getMinY();
+    }
+    
     
     }
 

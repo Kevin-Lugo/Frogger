@@ -3,6 +3,7 @@ package Game.Entities.Dynamic;
 import Game.Entities.EntityBase;
 import Game.Entities.Static.Log;
 import Game.Entities.Static.Turtle;
+import Game.GameStates.State;
 import Main.Handler;
 import Resources.Images;
 
@@ -13,6 +14,7 @@ import java.awt.image.BufferedImage;
 /*
  * The Frog.
  */
+
 public class Player extends EntityBase {
 	private Handler handler;
 
@@ -21,6 +23,8 @@ public class Player extends EntityBase {
 	private Boolean moving = false;
 	private int moveCoolDown = 0;
 	private int index = 0;
+	private int score =0;
+	public static int highscore ;
 
 	public Player(Handler handler) {
 		super(handler);
@@ -56,12 +60,13 @@ public class Player extends EntityBase {
 
 // this methods checks the player coordinates. It wont get the frog get out of bounds
 	private void PlayerBoundaries() {
-		// System.out.println("X = " + player.getX() + " Y = "+ player.getY());
+		 
 		if (this.getX() <= (0))
 			this.setX(0);
 		if (this.getX() >= (640))
 			this.setX(576);
-
+		if ( this.getY() >= 768)
+			State.setState(handler.getGame().GameOverState);
 	}
 
 	private void move() {
@@ -69,13 +74,19 @@ public class Player extends EntityBase {
 
 		if (moveCoolDown < 25) {
 			moveCoolDown++;
+			
 
 		}
 		index = 0;
 
 		///////////////// MOVE UP///////////////
 		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_W) && !moving && facing.equals("UP")) {
-
+			this.score++;
+			if (this.score >= this.highscore)
+			this.highscore = this.score;
+			
+			//System.out.println( "score " +this.score);
+			//System.out.println("High score"+ this.highscore);
 			moving = true;
 
 		} else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_W) && !moving && !facing.equals("UP")) {
@@ -112,6 +123,9 @@ public class Player extends EntityBase {
 		///////////////// MOVE DOWN///////////////
 		else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_S) && !moving && facing.equals("DOWN")) {
 			moving = true;
+			
+			this.score--;
+			//System.out.println( "score " +this.score);
 		} else if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_S) && !moving && !facing.equals("DOWN")) {
 			reGrid();
 			if (facing.equals("RIGHT")) {
@@ -181,7 +195,13 @@ public class Player extends EntityBase {
 	}
 
 	public void render(Graphics g) {
-
+		// Displays the score in the top right corner
+		Graphics2D g2d = (Graphics2D)g;		
+		g2d.setFont(new Font("Times New Roman", Font.PLAIN, 50));
+		g2d.setColor(Color.YELLOW);
+		g2d.drawString("SCORE: " + String.valueOf(handler.getPlayer().highscore), 64*5, 64);
+		
+		
 		if (index >= 8) {
 			index = 0;
 			moving = false;
@@ -203,6 +223,8 @@ public class Player extends EntityBase {
 		}
 
 		UpdatePlayerRectangle(g);
+		
+		
 
 	}
 
@@ -244,5 +266,15 @@ public class Player extends EntityBase {
 		return facing;
 
 	}
+
+	/**
+	 * @return the highscore
+	 */
+	public int getHighscore() {
+		return highscore;
+	}
+
+	
+	
 
 }

@@ -6,6 +6,7 @@ import Game.Entities.Static.Log;
 import Game.Entities.Static.StaticBase;
 import Game.Entities.Static.Tree;
 import Game.Entities.Static.Turtle;
+import Game.GameStates.State;
 import Main.GameSetUp;
 import Main.Handler;
 import UI.UIManager;
@@ -29,7 +30,7 @@ public class WorldManager {
 
 	private ArrayList<BaseArea> SpawnedAreas; // Areas currently on world
 	private ArrayList<StaticBase> SpawnedHazards; // Hazards currently on world.
-	public int LillyChoice = 0;
+	public int LillyChoice = 1;
 	Long time;
 	Boolean reset = true;
 
@@ -81,7 +82,7 @@ public class WorldManager {
 				SpawnedAreas.add(randomArea((-2 + i) * 64));
 
 		PlayerSpawn();
-		// System.out.println("X = " + player.getX() + " Y = "+ player.getY());
+		
 
 		// Not used atm.
 		grid = new ID[gridWidth][gridHeight];
@@ -93,7 +94,7 @@ public class WorldManager {
 	}
 
 	public void tick() {
-
+		deadfrog();
 		if (this.handler.getKeyManager().keyJustPressed(this.handler.getKeyManager().num[2])) {
 			this.object2.word = this.object2.word + this.handler.getKeyManager().str[1];
 		}
@@ -124,7 +125,6 @@ public class WorldManager {
 			}
 
 		}
-
 		for (BaseArea area : SpawnedAreas) {
 			area.tick();
 		}
@@ -148,13 +148,42 @@ public class WorldManager {
 		}
 
 		HazardMovement();
+
 		StaticTree();
+
 		player.tick();
 		// make player move the same as the areas
 		player.setY(player.getY() + movementSpeed);
 
 		object2.tick();
 
+	}
+
+// If the frog touches the water it sets game state to GameOver Statea
+	public void deadfrog() {
+
+		boolean inwater = false;
+		for (BaseArea bA : SpawnedAreas) {
+			if (bA instanceof WaterArea) {
+				//System.out.println(bA.getYPosition() + "," + player.getY());
+				if (player.getY() > bA.getYPosition() && player.getY() < bA.getYPosition() + 64) {
+					//System.out.println(bA.getYPosition() + "," + player.getY());
+					inwater = true;
+					for (StaticBase hz : SpawnedHazards) {
+						if (hz.GetCollision() != null && player.getPlayerCollision().intersects(hz.GetCollision())) {
+							inwater = false;
+						}
+
+					}
+
+				}
+			}
+		}
+		if (inwater) {
+			State.setState(handler.getGame().GameOverState);
+
+		}
+		return;
 	}
 
 	// This method wont let the frog jump over the tree
@@ -210,12 +239,12 @@ public class WorldManager {
 			SpawnedHazards.get(i).setY(SpawnedHazards.get(i).getY() + movementSpeed);
 
 			// Moves Log or Turtle to the right
-			if (SpawnedHazards.get(i) instanceof Log ) {
+			if (SpawnedHazards.get(i) instanceof Log) {
 				SpawnedHazards.get(i).setX(SpawnedHazards.get(i).getX() + 1);
 				if (SpawnedHazards.get(i).getX() == 640) {
-				SpawnedHazards.get(i).setX(-64*2);
+					SpawnedHazards.get(i).setX(-64 * 2);
 				}
-			
+
 				// Verifies the hazards Rectangles aren't null and
 				// If the player Rectangle intersects with the Log or Turtle Rectangle, then
 				// move player to the right.
@@ -228,40 +257,33 @@ public class WorldManager {
 			if (SpawnedHazards.get(i) instanceof Turtle) {
 				SpawnedHazards.get(i).setX(SpawnedHazards.get(i).getX() - 1);
 				if (SpawnedHazards.get(i).getX() == 0) {
-				SpawnedHazards.get(i).setX(768);
+					SpawnedHazards.get(i).setX(768);
 				}
-			
+
 				// Verifies the hazards Rectangles aren't null and
 				// If the player Rectangle intersects with the Log or Turtle Rectangle, then
 				// move player to the right.
 				if (SpawnedHazards.get(i).GetCollision() != null
-						&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision()) 
+						&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision())
 						&& SpawnedHazards.get(i) instanceof Log) {
 					player.setX(player.getX() + 1);
 
 				}
 				if (SpawnedHazards.get(i).GetCollision() != null
-						&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision()) 
+						&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision())
 						&& SpawnedHazards.get(i) instanceof Turtle) {
 					player.setX(player.getX() - 1);
 
 				}
-				
-				
+
 			}
-			
-			
-			
-			
 
 			// if hazard has passed the screen height, then remove this hazard.
 			if (SpawnedHazards.get(i).getY() > handler.getHeight()) {
 				SpawnedHazards.remove(i);
 			}
 		}
-		}
-
-	
+	}
 
 	public void render(Graphics g) {
 
@@ -328,7 +350,6 @@ public class WorldManager {
 		Random rand = new Random();
 		int randInt;
 
-		// System.out.println("Before if " + LillyChoice);
 
 		if (LillyChoice != 3) {
 
@@ -358,6 +379,8 @@ public class WorldManager {
 		}
 
 	}
+
+	// spawns multiply turtles
 	private void TurtleSpawn(int yPosition, BaseArea area, int choice) {
 		Random rand = new Random();
 		int randInt;
@@ -368,38 +391,36 @@ public class WorldManager {
 		;
 
 		if (LillyChoice != 4) {
-			//System.out.println(" equals = " + randTimesTur);
+
 			randInt = rand.nextInt(9);
+			// spawns the turtle ans set the distance between them
 			for (int i = 1; i <= randTimesTur; i++) {
 
-				// randInt = 64 * rand.nextInt(9) ;
 				if (randTimesTur == 1) {
-					System.out.println(" 1 Logs");
+
 					randInt = 0;
 				} else if (randTimesTur == 2) {
-					System.out.println(" 2 Logs");
+
 					randInt = randInt + 5 * 64;
 				} else if (randTimesTur == 3) {
-					System.out.println(" 2 Logs");
+
 					randInt = randInt + 4 * 64;
 				} else if (randTimesTur == 4) {
-					System.out.println(" 4 Logs");
+
 					randInt = randInt + 3 * 64;
 				}
 
 				SpawnedHazards.add(new Turtle(handler, randInt, yPosition));
 
 				LillyChoice = 4;
-				// System.out.println("After if" + LillyChoice);
-				System.out.println(i);
+
 			}
 
 		}
-		
-		
-		
+
 	}
 
+// Spawns from 1 to 4 logs
 	private void LogSpawn(int yPosition, BaseArea area, int choice) {
 
 		Random rand = new Random();
@@ -411,22 +432,22 @@ public class WorldManager {
 		;
 
 		if (LillyChoice != 2) {
-			System.out.println(" equals = " + randTimesLog);
+
 			randInt = rand.nextInt(9);
+			// sets the discance bewteen each log
 			for (int i = 1; i <= randTimesLog; i++) {
 
-				// randInt = 64 * rand.nextInt(9) ;
 				if (randTimesLog == 1) {
-					System.out.println(" 1 Logs");
+
 					randInt = 0;
 				} else if (randTimesLog == 2) {
-					System.out.println(" 2 Logs");
+
 					randInt = randInt - 5 * 64;
 				} else if (randTimesLog == 3) {
-					System.out.println(" 2 Logs");
+
 					randInt = randInt - 4 * 64;
 				} else if (randTimesLog == 4) {
-					System.out.println(" 4 Logs");
+
 					randInt = randInt - 3 * 64;
 				}
 
@@ -434,7 +455,7 @@ public class WorldManager {
 
 				LillyChoice = 2;
 				// System.out.println("After if" + LillyChoice);
-				System.out.println(i);
+
 			}
 
 		}
@@ -451,7 +472,7 @@ public class WorldManager {
 	private void SpawnHazard(int yPosition, BaseArea area) {
 		Random rand = new Random();
 		int randInt;
-		
+
 		int choice = rand.nextInt(7);
 		// Chooses between Log or Lillypad
 
@@ -465,16 +486,16 @@ public class WorldManager {
 
 			if (choice <= 2) {
 				LogSpawn(yPosition, area, choice);
-				
+
 			} else if (choice >= 5) {
 
 				LillyPadSpawn(yPosition, area, choice);
 
 			} else {
 				TurtleSpawn(yPosition, area, choice);
-				
+
 			}
-			
+
 		}
 
 	}

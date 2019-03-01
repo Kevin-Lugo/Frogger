@@ -16,10 +16,11 @@ import com.sun.glass.events.KeyEvent;
  * The WorldManager Class is constructed.
  */
 public class GameState extends State {
-
+	
 
     public GameState(Handler handler){
         super(handler);
+        handler.getPlayer().highscore = 0;
         handler.setEntityManager(new EntityManager(handler));
         handler.setWorldManager(new WorldManager(handler));
 

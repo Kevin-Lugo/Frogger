@@ -45,8 +45,8 @@ public class Images {
     public static BufferedImage Tree;
     public static BufferedImage log;
     public static BufferedImage grass;
-   // public static BufferedImage GameOver;
-   // public static BufferedImage MenuBottom;
+    public static BufferedImage GameOver;
+    //public static BufferedImage[] MenuBottom;
 
     public static BufferedImage[] object;
 
@@ -61,6 +61,7 @@ public class Images {
         Turtle = new BufferedImage[20];
         Water = new BufferedImage[3];
         object = new BufferedImage[6];
+       // MenuBottom = new BufferedImage[1];
 
         try {
             playerSheet = new SpriteSheet(ImageIO.read(getClass().getResourceAsStream("/Sheets/gameSprites.png")));
@@ -68,7 +69,7 @@ public class Images {
 
             title = ImageIO.read(getClass().getResourceAsStream("/Sheets/Frogger2.png"));
             Pause = ImageIO.read(getClass().getResourceAsStream("/Buttons/Pause.png"));
-           // GameOver = ImageIO.read(getClass().getResourceAsStream("/Sheets/GameOver.png"));
+            GameOver = ImageIO.read(getClass().getResourceAsStream("/Sheets/GameOver.png"));
             Resume[0] = ImageIO.read(getClass().getResourceAsStream("/Buttons/ResumeButton.png"));
             Resume[1] = ImageIO.read(getClass().getResourceAsStream("/Buttons/ResumeButton2.png"));
             BTitle[0] = ImageIO.read(getClass().getResourceAsStream("/Buttons/TitleButton.png"));
@@ -78,7 +79,8 @@ public class Images {
             butstart[0]= ImageIO.read(getClass().getResourceAsStream("/Buttons/StartButton.png"));//normbut
             butstart[1]= ImageIO.read(getClass().getResourceAsStream("/Buttons/Startbutton2.png"));//hoverbut
             butstart[2]= ImageIO.read(getClass().getResourceAsStream("/Buttons/StartButton3.png"));//clickbut
-           // MenuBottom = ImageIO.read(getClass().getResourceAsStream("/Buttons/MenuBottom.png"));
+          // MenuBottom[0] = ImageIO.read(getClass().getResourceAsStream("/Buttons/MenuBottom.png"));
+           //MenuBottom[1] = ImageIO.read(getClass().getResourceAsStream("/Buttons/MenuBottom.png"));
             
             Player[0]= playerSheet.crop(0,30,52,39);
             Player[1]= playerSheet.crop(53,25,59,46);

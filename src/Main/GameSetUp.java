@@ -4,6 +4,7 @@ import Display.DisplayScreen;
 import Game.GameStates.GameState;
 import Game.GameStates.MenuState;
 import Game.GameStates.PauseState;
+import Game.GameStates.GameOverState;
 import Game.GameStates.State;
 import Input.KeyManager;
 import Input.MouseManager;
@@ -44,6 +45,7 @@ public class GameSetUp implements Runnable {
     public State gameState;
     public State menuState;
     public State pauseState;
+    public State GameOverState;
 
     //Res.music
     public MusicHandler musicHandler;
@@ -78,9 +80,10 @@ public class GameSetUp implements Runnable {
         gameState = new GameState(handler);
         menuState = new MenuState(handler);
         pauseState = new PauseState(handler);
+        GameOverState = new GameOverState(handler);
 
         State.setState(menuState);
-        //musicHandler.set_changeMusic("res/music/Perro chillando.mp3");
+       // musicHandler.set_changeMusic("res/music/Perro chillando.mp3");
         musicHandler.set_changeMusic("res/music/04 Caro.mp3");
         //musicHandler.set_changeMusic("res/music/UTheme.mp3");
         musicHandler.play();
@@ -92,6 +95,7 @@ public class GameSetUp implements Runnable {
 
     public void reStart(){
         gameState = new GameState(handler);
+      
     }
 
     public synchronized void start(){
@@ -173,7 +177,7 @@ public class GameSetUp implements Runnable {
         g.drawImage(loading ,0,0,width,height,null);
         if(State.getState() != null)
             State.getState().render(g);
-
+        
 
         //End Drawing!
         bs.show();

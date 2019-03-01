@@ -1,6 +1,7 @@
 package Game.World;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 import Main.Handler;
 
@@ -8,6 +9,7 @@ public class BaseArea {
     Handler handler;
 
     int yPosition;
+    Rectangle area = new Rectangle();
 
     boolean canStepOn = true;
 
@@ -17,6 +19,7 @@ public class BaseArea {
     BaseArea(Handler handler, int yPosition) {
         this.handler = handler;
         this.yPosition = yPosition;
+        
     }
 
     public void tick(){
@@ -34,5 +37,11 @@ public class BaseArea {
     
     public void setYPosition(int position) {
     	this.yPosition = position;
+    }
+    public Rectangle GetCollision() {
+		return area;
+	}
+    public Rectangle getArea() {
+    	return this.area;
     }
 }
