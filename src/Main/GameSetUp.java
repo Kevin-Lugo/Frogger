@@ -84,7 +84,8 @@ public class GameSetUp implements Runnable {
 
         State.setState(menuState);
        // musicHandler.set_changeMusic("res/music/Perro chillando.mp3");
-        musicHandler.set_changeMusic("res/music/04 Caro.mp3");
+        //musicHandler.set_changeMusic("res/music/04 Caro.mp3");
+        musicHandler.set_changeMusic("res/music/Undertale OST 100 - Megalovania.wav");
         //musicHandler.set_changeMusic("res/music/UTheme.mp3");
         musicHandler.play();
         musicHandler.setLoop(true);
@@ -144,7 +145,7 @@ public class GameSetUp implements Runnable {
         stop();
 
     }
-
+ 
     /*
      * Many classes will have this badboy (and the render.)
      * With the tick you can check stuff every "tick" which is called like a lot of times per second (like 60).
