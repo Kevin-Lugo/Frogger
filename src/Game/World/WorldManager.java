@@ -162,28 +162,6 @@ public class WorldManager {
 // If the frog touches the water it sets game state to GameOver Statea
 	public void deadfrog() {
 
-//		boolean inwater = false;
-//		for (BaseArea bA : SpawnedAreas) {
-//			if (bA instanceof WaterArea) {
-//				//System.out.println(bA.getYPosition() + "," + player.getY());
-//				if (player.getY() > bA.getYPosition() && player.getY() < bA.getYPosition() + 64) {
-//					//System.out.println(bA.getYPosition() + "," + player.getY());
-//					inwater = true;
-//					for (StaticBase hz : SpawnedHazards) {
-//						if (hz.GetCollision() != null && player.getPlayerCollision().intersects(hz.GetCollision())) {
-//							inwater = false;
-//						}
-//
-//					}
-//
-//				}
-//			}
-//		}
-//		if (inwater) {
-//			State.setState(handler.getGame().GameOverState);
-//
-//		}
-//		return;
 		for (int i = 0; i < SpawnedAreas.size(); i++) {
 			if(SpawnedAreas.get(i) instanceof WaterArea) {
 				if (player.getPlayerCollision().getY() == SpawnedAreas.get(i).getYPosition()) {
